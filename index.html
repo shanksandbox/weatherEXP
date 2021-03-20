@@ -1,0 +1,314 @@
+<!-- Created by Shashank Kumar Singh -->
+<!--let me know if you are getting an error-->
+<html lang="en">
+
+<head>
+  <style>
+    /* Created by Shashank */
+
+/* Created by Shashank*/
+body {
+  letter-spacing: 0.2em;
+  font-size: 0.8em;
+}
+
+.container {
+  max-width: 400px;
+}
+
+#footer {
+  padding: 7% 15%;
+  text-align: center;
+}
+
+.social-icon {
+  margin: 20px 10px;
+}
+
+@media (max-width: 1028px) {
+  #title {
+    text-align: center;
+  }
+
+  .title-image {
+    position: static;
+    transform: rotate(0);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #title {
+    margin-top: -220%;
+    color: #010a43;
+    right: 30%;
+    z-index: 1;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #title {
+    margin-top: -60%;
+    color: #010a43;
+    right: 30%;
+    z-index: 1;
+  }
+}
+
+.container-fliud {
+  padding: 3% 15% 7%;
+}
+
+#banner {
+  background-image: linear-gradient(120deg, #91C4FF 0%, #F0F7FF 87%);
+  position: relative;
+  width: 100%;
+  height: 950px;
+  z-index: -1;
+}
+
+#cloud-scroll {
+  background: url( 1.jpg
+ ) repeat-x;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  position: absolute;
+  -webkit-animation: 900000s backgroundScroll infinite linear;
+  -moz-animation: 900000s backgroundScroll infinite linear;
+  -o-animation: 900000s backgroundScroll infinite linear;
+  -ms-animation: 900000s backgroundScroll infinite linear;
+  animation: 900000s backgroundScroll infinite linear;
+}
+
+@-webkit-keyframes backgroundScroll {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -99999999px 0;
+  }
+}
+
+@keyframes backgroundScroll {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -99999999px 0;
+  }
+}
+    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="https://kit.fontawesome.com/7e5f32b196.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styletest.css">
+  <script src="apptest.js"></script>
+
+
+  <title>Weather EXP</title>
+</head>
+
+<body textcolor=black >
+  <center><h1>Weather Exp</h1></center>
+  <div id="banner">
+    <div id="cloud-scroll"></div>
+  </div>
+  <section id="title" style="top: 0;">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+       <centre>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tel:9693592679 ">Call Me For Assistance</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+      <div class="container my-5 mx-auto">
+
+
+
+        <div class=search>
+
+
+          <form class="change-location my-4 text-center text-muted">
+
+            <input type="text" name="city" placeholder="Enter a location for weather information" class="form-control p-4"><br>
+          </form>
+        </div>
+
+        <div class=button>
+          <button style="margin-top: -5%;" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
+        </div>
+        <br>
+
+        <div class=search_button>
+
+          <div class="card shadow-lg rounded d-none ">
+            <img src="https://via.placeholder.com/400x300" class="time card-img-top">
+            <div class="icon bg-light mx-auto text-center">
+            </div>
+            <div class="text-muted text-uppercase text-center details  ">
+              <h5 class="my-3">City </h5>
+              <div class="my-3">Weather Conditions</div>
+              <div class="display-4 my-4">
+                <span>Temperature</span>
+                <span>&deg;C</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+
+
+// Created by Shashank
+
+//alert ("Request limit is reached.Code will not work.Dm if you still want to see output")
+window.onload = function() {
+  $("button").click(function() {
+
+
+
+    const city = cityForm.city.value.trim();
+    cityForm.reset();
+
+    updateCity(city)
+      .then(data => updateUI(data))
+      .catch(err => console.log(err));
+  });
+
+  const key ='    Ffj3Rq1uOGdQScHjhAaT9UuxeA8b9Byc ';
+
+
+  const getWeather = async (id) => {
+    const base = 'https://dataservice.accuweather.com/currentconditions/v1/';
+    const query = `${id}?apikey=${key}`;
+    const response = await fetch(base + query);
+    const data = await response.json();
+
+    return data[0];
+  };
+
+  const getCity = async (city) => {
+    const base = 'https://dataservice.accuweather.com/locations/v1/cities/search';
+    const query = `?apikey=${key}&q=${city}`;
+
+    const response = await fetch(base + query);
+    const data = await response.json();
+
+    return data[0];
+
+  };
+
+  //  getCity('mumbai').then(data => {
+  //   return getWeather(data.Key)
+  // }).then(data =>{
+  //   console.log(data);
+  // }).catch(err => console.log(err));
+
+
+
+  const cityForm = document.querySelector('form');
+  const card = document.querySelector('.card');
+  const details = document.querySelector('.details');
+  const time = document.querySelector('img.time');
+  const icon = document.querySelector('.icon img');
+
+
+  const updateUI = (data) => {
+
+    const cityDets = data.cityDets;
+    const weather = data.weather;
+
+
+    details.innerHTML = `
+<h5 class="my-3">${cityDets.EnglishName}</h5>
+<div class="my-3">${weather.WeatherText}</div>
+<div class="display-4 my-4">
+<span>${weather.Temperature.Metric.Value}</span>
+<span>&deg;C</span>
+</div>
+`;
+
+    let timeSrc = null;
+    if (weather.IsDayTime) {
+      timeSrc = 'https://i.imgur.com/MbcC6II.jpg';
+    } else {
+      timeSrc = 'https://i.imgur.com/PKf8NXh.jpg';
+    }
+    time.setAttribute('src', timeSrc);
+
+
+    if (card.classList.contains('d-none')) {
+
+      card.classList.remove('d-none');
+    }
+    card.classList.remove('d-none');
+  };
+
+  const updateCity = async (city) => {
+
+
+    const cityDets = await getCity(city);
+    const weather = await getWeather(cityDets.Key);
+
+    return {
+      cityDets,
+      weather
+    };
+  };
+
+  if (cityForm) {
+    cityForm.addEventListener('submit', e => {
+
+      e.preventDefault();
+
+      const city = cityForm.city.value.trim();
+      cityForm.reset();
+
+      updateCity(city)
+        .then(data => updateUI(data))
+        .catch(err => console.log(err));
+
+    });
+  }
+}
+
+
+
+
+//  MI1bQmSDxCPmacEQne5bYgiPxtPYVHL0
+//      LilqHytJSOqjpbGC5MwRPvW0Mh2t2Tp6
+
+  </script>
+</body>
+
+</html>
